@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.5)
 
 add_definitions(-D_POSIX)
 add_subdirectory(microstack)
