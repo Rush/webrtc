@@ -1072,13 +1072,17 @@ char* ILibWrapper_WebRTC_Connection_SetOffer(ILibWrapper_WebRTC_Connection conne
 	char* sdp;
 	int isActive;
 	char *un,*up;
-
+	
 	if(obj->remoteOfferBlock!=NULL) {free(obj->remoteOfferBlock);}
 	if(obj->offerBlock!=NULL) {free(obj->offerBlock);}
 	
 	obj->remoteOfferBlockLen = ILibWrapper_SdpToBlock(offer, offerLen, &isActive, &(obj->remoteUsername), &(obj->remotePassword), &(obj->remoteOfferBlock));
-
+	if(!obj->remoteOfferBlockLen) {
+		// something wrong with the offer, let's not crash the parser
+		return NULL;
+	}
 	offer[offerLen] = 0;
+	
 	ILibRemoteLogging_printf(ILibChainGetLogger(obj->mFactory->ChainLink.ParentChain), ILibRemoteLogging_Modules_WebRTC_STUN_ICE, ILibRemoteLogging_Flags_VerbosityLevel_1, "[ILibWrapperWebRTC] Set ICE/Offer: <br/>%s", offer);
 
 	obj->offerBlockLen = ILibStun_SetIceOffer2(obj->mFactory->mStunModule, obj->remoteOfferBlock, obj->remoteOfferBlockLen, obj->offerBlock != NULL ? obj->localUsername : NULL, obj->offerBlock != NULL ? 8 : 0, obj->offerBlock != NULL ? obj->localPassword : NULL, obj->offerBlock != NULL ? 32 : 0, &obj->offerBlock);

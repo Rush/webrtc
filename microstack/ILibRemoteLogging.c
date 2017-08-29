@@ -229,9 +229,14 @@ void ILibRemoteLogging_printf(ILibRemoteLogging loggingModule, ILibRemoteLogging
 		len += 4; // Space for header (which isn't needed when forwarding)
 	}
 
-    va_start(argptr, format);
-    len += vsnprintf(dest+len, 4096 - len, format, argptr);
-    va_end(argptr);
+	// va_start(argptr, format);
+	// char format2[4096];
+	// snprintf(format2, sizeof(format2), "%s\n", format);
+	// vfprintf(stderr, format2, argptr);
+	// va_end(argptr);
+
+  va_start(argptr, format);
+  len += vsnprintf(dest+len, 4096 - len, format, argptr);
     
 	if (obj != NULL && obj->RawForwardSink != NULL)
 	{

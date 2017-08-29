@@ -102,4 +102,3 @@ typedef void(*ILibRemoteLogging_OnRawForward)(ILibRemoteLogging sender, ILibRemo
 /*! @} */
 
 #endif
-

@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
 
-
 include(ExternalProject)
 
 ExternalProject_Add(
@@ -23,6 +22,8 @@ set_property(TARGET crypto_lib PROPERTY IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
 
 # find_package(OpenSSL REQUIRED) 
+
+add_definitions(-D_REMOTELOGGING)
 
 add_library(microstack
   ILibAsyncServerSocket.c  ILibAsyncUDPSocket.c       ILibProcessPipe.c    ILibSimpleDataStore.c  ILibWebRTC.c     ILibWrapperWebRTC.c  sha1.c
